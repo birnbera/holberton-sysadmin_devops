@@ -3,6 +3,7 @@
 Script to export data on all employee tasks from
 'https://jsonplaceholder.typicode.com/'
 """
+import json
 from requests import get
 
 
@@ -28,11 +29,13 @@ def combine_users_tasks(users, tasks):
         for user in users
     }
 
+
 if __name__ == "__main__":
     tasks = get_endpoint("todos")
     users = get_endpoint("users")
     try:
         out = combine_users_tasks(users, tasks)
-        print(out)
+        with open("todo_all_employees.json", 'w') as f:
+            json.dump(out, f)
     except Exception as e:
         print(e)
